@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.practise.meetingroom.dao.TMeetingroomMapper" >
+  <resultMap id="BaseResultMap" type="com.practise.meetingroom.model.TMeetingroom" >
+    <id column="meetingroom_id" property="meetingroomId" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="meetingroom_name" property="meetingroomName" jdbcType="VARCHAR" />
+    <result column="assignmentTime" property="assignmenttime" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="meeting_Type" property="meetingType" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    meetingroom_id, createTime, meetingroom_name, assignmentTime, number, remarks, meeting_Type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.practise.meetingroom.model.TMeetingroomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_MeetingRoom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_MeetingRoom
+    where meetingroom_id = #{meetingroomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_MeetingRoom
+    where meetingroom_id = #{meetingroomId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.practise.meetingroom.model.TMeetingroomExample" >
+    delete from t_MeetingRoom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.practise.meetingroom.model.TMeetingroom" >
+    insert into t_MeetingRoom (meetingroom_id, createTime, meetingroom_name, 
+      assignmentTime, number, remarks, 
+      meeting_Type)
+    values (#{meetingroomId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{meetingroomName,jdbcType=VARCHAR}, 
+      #{assignmenttime,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
+      #{meetingType,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.practise.meetingroom.model.TMeetingroom" >
+    insert into t_MeetingRoom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meetingroomId != null" >
+        meetingroom_id,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="meetingroomName != null" >
+        meetingroom_name,
+      </if>
+      <if test="assignmenttime != null" >
+        assignmentTime,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="meetingType != null" >
+        meeting_Type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meetingroomId != null" >
+        #{meetingroomId,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingroomName != null" >
+        #{meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmenttime != null" >
+        #{assignmenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingType != null" >
+        #{meetingType,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.practise.meetingroom.model.TMeetingroomExample" resultType="java.lang.Integer" >
+    select count(*) from t_MeetingRoom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_MeetingRoom
+    <set >
+      <if test="record.meetingroomId != null" >
+        meetingroom_id = #{record.meetingroomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.meetingroomName != null" >
+        meetingroom_name = #{record.meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignmenttime != null" >
+        assignmentTime = #{record.assignmenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingType != null" >
+        meeting_Type = #{record.meetingType,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_MeetingRoom
+    set meetingroom_id = #{record.meetingroomId,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      meetingroom_name = #{record.meetingroomName,jdbcType=VARCHAR},
+      assignmentTime = #{record.assignmenttime,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      meeting_Type = #{record.meetingType,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.practise.meetingroom.model.TMeetingroom" >
+    update t_MeetingRoom
+    <set >
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingroomName != null" >
+        meetingroom_name = #{meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmenttime != null" >
+        assignmentTime = #{assignmenttime,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingType != null" >
+        meeting_Type = #{meetingType,jdbcType=BIT},
+      </if>
+    </set>
+    where meetingroom_id = #{meetingroomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.practise.meetingroom.model.TMeetingroom" >
+    update t_MeetingRoom
+    set createTime = #{createtime,jdbcType=TIMESTAMP},
+      meetingroom_name = #{meetingroomName,jdbcType=VARCHAR},
+      assignmentTime = #{assignmenttime,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      meeting_Type = #{meetingType,jdbcType=BIT}
+    where meetingroom_id = #{meetingroomId,jdbcType=INTEGER}
+  </update>
+</mapper>
