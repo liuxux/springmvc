@@ -1,0 +1,39 @@
+/**
+ * Created by Jemmy.tang on 2016/8/11.
+ * 1.自定义单选／复选框插件
+ */
+(function($){
+    $.fn.extend({
+        /*
+        ＊自定义复选框
+         */
+        checkbox: function(opt){
+            this.each(function(index, el) {
+                $(this).find('input[type=checkbox]').change(function(){
+                    if($(this).is(':checked')){
+                        $(this).parent().addClass('checked');
+                    }else{
+                        $(this).parent().removeClass('checked');
+                    }
+                    opt && opt.change && opt.change.call($(this));
+                })
+            });
+        },
+
+        /*
+        ＊自定单选选框
+         */
+        radio: function(opt){
+            var _this = this;
+            this.each(function(index, el) {
+                $(this).find('input[type=radio]').change(function(){
+                    $(_this).removeClass('checked');
+                    if($(this).is(':checked')){
+                        $(this).parent().addClass('checked');
+                    }
+                })
+            });
+        }
+    });
+    
+})(jQuery)

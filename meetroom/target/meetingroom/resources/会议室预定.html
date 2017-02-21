@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="webkit" name="renderer">
+    <title>会议室预定</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+
+<body>
+<!-- siteNav start -->
+<script type="text/javascript" src="./temp/siteNav.js"></script>
+<!-- siteNav end -->
+
+<!-- header start -->
+<script type="text/javascript" src="./temp/header.js"></script>
+<!-- header end -->
+
+<!-- content start -->
+<div class="nav-main">
+  <div class="container clearfix">
+    <div class="nav-list fr">
+      <a href="#" class="nav-active">预定管理</a>
+      <a href="#">预定记录</a>
+    </div>
+    <h1>会议室预定</h1>
+  </div>
+</div>
+
+<div class="container wrap">
+  <div class="metting-reservation-hd">
+    <div class="metting-date">
+      <span class="date-txt">2016-07-01</span>
+      <a href="javascript:;" class="icon-date ml6"></a>
+      <div id="oDate"></div>
+    </div>
+    <a href="javascript:;" class="u-btn u-btn-primary" onclick="bookMetting()">预定会议室</a>
+  </div>
+  <div class="metting-reservation-bd clearfix mt20"></div>
+</div>
+<!-- content end -->
+
+<!-- footer start -->
+<script type="text/javascript" src="./temp/footer.js"></script>
+<!-- footer end -->
+
+<div class="layer-con lay-book">
+  <div class="popupLayer">
+    <div class="pop-hd">
+      <h2 class="title">预定会议</h2>
+    </div>
+    <div class="pop-bd mt30">
+      <div class="m-form ml20">
+        <div class="form-group">
+          <label class="control-label col-4"><i>*</i>主题</label>
+          <div class="col-offset-4">
+            <input class="u-txt" type="text" style="width: 495px;">
+          </div>
+        </div>
+        <div class="form-group mb4" style="z-index: 3;">
+          <label class="control-label col-4">日期</label>
+          <div class="col-offset-4">
+            <input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">
+            <div class="u-select j-select1 fl ml10" style="width: 65px;">
+              <select name="province" id="province">
+                <option>08:00</option>
+                <option>08:30</option>
+                <option>09:00</option>
+                <option>09:30</option>
+                <option>10:00</option>
+                <option>10:30</option>
+              </select>
+            </div>
+            <span class="fl ml6 mr6">~</span>
+            <input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">
+            <div class="u-select j-select2 fl ml10" style="width: 65px;">
+              <select name="province" id="province">
+                <option>12:00</option>
+                <option>11:00</option>
+                <option>10:00</option>
+              </select>
+            </div>
+            <label class="u-checkbox ml10 checked"><input type="checkbox" checked=""><i class="ico"></i>全天事件</label><br>
+            <span class="f12 c7">抱歉，该时段已被预定</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-4">地点</label>
+          <div class="col-offset-4">平台中心会议室（1~6人）</div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-4">设备</label>
+          <div class="col-offset-4 m-checkbox-horizontal">
+            <label class="u-checkbox checked"><input type="checkbox" checked=""><i class="ico"></i>画板</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>笔记本电脑</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>翻页笔</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>智能电话</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>投影仪</label>
+          </div>
+        </div>
+        <div class="form-group" style="z-index: 2;">
+          <label class="control-label col-4">提醒</label>
+          <div class="col-offset-4">
+            <div class="u-select j-select1 fl" style="width: 100px;">
+              <select name="province" id="province">
+                <option>10分钟前</option>
+                <option>15分钟前</option>
+                <option>30分钟前</option>
+                <option>1小时前</option>
+                <option>2小时前</option>
+                <option>6小时前</option>
+                <option>12小时前</option>
+                <option>18小时前</option>
+                <option>1天前</option>
+                <option>2天前</option>
+              </select>
+            </div>
+            <label class="control-label col-5 ml20">提醒方式：</label>
+            <div class="col-offset-5">
+              <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>邮件</label>
+              <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>短信</label>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pop-ft mt50">
+      <div class="m-btn-group tc">
+        <a href="#" class="u-btn u-btn-primary" onclick="bookSuccess()">确定</a>
+        <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+      </div>
+    </div>
+    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+  </div>
+</div>
+<div class="layer-con layer-book-success">
+  <div class="popupLayer">
+    <div class="pop-hd"></div>
+    <div class="pop-bd">
+      <div class="m-feedback mt50">
+        <i class="iconfont success">&#xe612;</i>
+        <h2 class="h2 fn mt6">预定成功</h2>
+      </div>
+      <div class="layer-information mt20">
+        <p class="f12 c3 lh20">预定人：欧阳菲菲<br>地点：平台中心会议室<br>主题：项目会议讨论<br>时间：2016-11-20   14:30~16:0</p>
+      </div>
+    </div>
+    <div class="pop-ft mt50">
+      <div class="m-btn-group tc">
+        <a href="#" class="u-btn u-btn-primary">确定</a>
+        <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+      </div>
+    </div>
+    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+  </div>
+</div>
+</body>
+<script src="js/calendar.js"></script>
+<script src="js/page.js"></script>
+<script src="js/mcalendar.js"></script>
+<script>
+$(function(){
+
+  $('.metting-reservation-bd').timeChart({
+    'xAxis':['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00'],
+    'yAxis':['平台中心会议室1（1~6人）','平台中心会议室2（1~6人）','接待室1（6~12人）','接待室2（6~12人）','IT会议室1（12人以上）','IT会议室2（12人以上）','接待室3（6~12人）','接待室4（6~12人）','IT会议室3（12人以上）','IT会议室4（12人以上）','IT会议室5（12人以上）','IT会议室6（12人以上）'],
+    'xStep':2,
+    'data':[
+      {'id':'mybook','date':'201-11-20','startTime':'08:30','endTime':'11:30','address':'平台中心会议室1（1~6人）','bookPeople':'小燕','mettingTheme':'项目会议讨论'},
+      {'id':'mybook','date':'201-11-20','startTime':'14:30','endTime':'16:00','address':'平台中心会议室2（1~6人）','bookPeople':'欧阳菲菲','mettingTheme':'项目会议讨论'},
+      {'id':'booked','startTime':'10:00','endTime':'12:30','address':'接待室1（6~12人）'},
+      {'id':'booked','startTime':'15:00','endTime':'17:30','address':'接待室2（6~12人）'},
+      {'id':'booked','startTime':'11:00','endTime':'14:00','address':'IT会议室5（12人以上）'}
+    ],
+    'showFigureNote':true,
+    'figureNote':[
+      {'text':'我的预定','bgcolor':'#47C978','borderC':'#47C978'},
+      {'text':'已被预定','bgcolor':'#F4F4F4','borderC':'#F4F4F4'},
+      {'text':'可预定','bgcolor':'#fff','borderC':'#eee'}
+    ]
+  });
+  var d=new Date(),aDate=$('.date-txt').html().split('-');
+  d.setFullYear(aDate[0],aDate[1]-1,aDate[2]);
+  $('#oDate').calendar({
+    width: 338,
+    height: 290,
+    trigger: '.icon-date',
+    zIndex: 999,
+    format: 'yyyy-mm-dd',
+    date: d,
+    onSelected: function (view, date, data) {
+        var strT=date.getFullYear()+'-'+(date.getMonth()<10?'0'+(date.getMonth()*1+1):(date.getMonth()*1+1))+'-'+(date.getDate()<10?'0'+date.getDate():date.getDate());
+        $('.date-txt').html(strT);
+    }
+  });
+  $('.u-select').select();
+  $('.u-checkbox').checkbox();
+})
+function bookMetting(){
+  dialog.init({
+    'w':735,
+    'h':502,
+    'layer':'.lay-book'
+  })
+}
+function bookSuccess(){
+  dialog.init({
+    'w':735,
+    'h':502,
+    'layer':'.layer-book-success'
+  })
+}
+</script>
+</html>

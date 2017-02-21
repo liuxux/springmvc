@@ -1,0 +1,316 @@
+/*
+	弹窗组件:依赖于jquery
+	参数：
+		isIfm			//是否为iframe弹出层    默认为false,
+		url,w,h			//iframe弹出层必传参,
+		oMask			//指定弹出层窗口，		jquery选择器都可行
+		cloBtn			//默认关闭按钮			.close
+		isMenB			//默认为true  		有遮罩层
+		opacity			//透明度  			默认0.35
+		bg				//遮罩层背景颜色		默认黑色
+		effect 			//动画效果  			fade：淡入淡出     down：从浏览器窗口最上方滑下
+		autoClose		//点击不相关区域自动关闭（蒙层区域） 默认true
+	方法：
+		init()			//弹出层初始化并弹出
+		closeFn()		//iframe内调用关闭弹出层
+		skip();			//iframe内跳转连接
+*/
+
+(function($){
+	$.fn.extend({
+		dialog:function(opt){
+			$(this).click(function(){
+				var d1 = new Dialog();		//实例化
+				d1.init(opt);
+				return false;
+			})
+		}
+	})
+})(jQuery)
+
+var dialog = new Dialog();
+
+function Dialog(){
+
+	this.mask = null;		//弹出层窗口
+	this.menban = null;	//遮罩层
+	this.maskFrame = null;
+
+	this.setting = {		//默认参数
+		//iframe 必传参
+		'isIfm':false,	//默认不支持iFrame
+		'url' :'',		//iframe src
+		'w' : 0,		//宽度
+		'h' : 0,		//高度
+		//通用
+		'oMask':'#maskDiv',	//弹出层ID
+		'cloBtn':'.close',	//默认关闭按钮
+		'isMenB' : true,	//默认有遮罩层
+		'opacity' : 0.35,	//遮罩层透明度
+		'bg' : 'black',		//遮罩层颜色
+		'effect':'fade', 	//动画效果
+		'autoClose':false
+	}
+
+}
+
+Dialog.prototype.init = function(opt){
+	var This = this;
+	var setting = This.setting;
+
+	$.extend( This.setting , opt ); //参数合并
+
+
+	This.bBtn = true;
+
+	setting.isMenB && This.creatMenBan();
+
+	if(setting.isIfm && setting.url=='')return;
+
+	setting.isIfm && This.creatMask();
+
+	!setting.isIfm && This.setMaskData();
+	!setting.isIfm && This.closeMask();
+}
+
+
+Dialog.prototype.creatMenBan = function(){	//创建遮罩层并设置样式
+
+	var This = this;
+	var setting = This.setting;
+	var docH = $(document).height();
+	var clientH = $(window).height();
+	var clientW = $(window).width();
+	var scorllT = $(window).scrollTop();
+	var	scorllL = $(window).scrollLeft();
+	docH = docH<clientH?clientH:docH;
+
+	if($('#menbanDiv').length == 0)
+	{
+		$('body').prepend('<div id="menbanDiv"><div class="loadMask"></div></div>');
+		this.menban = $('#menbanDiv');
+		this.menban.css({'height':'100%','background':setting.bg,'opacity':setting.opacity,'width':'100%','position':'fixed','top':'0','left':'0','z-index':'998'});
+	}
+
+	this.menban = $('#menbanDiv');
+	this.loadMask = this.menban.find('.loadMask');
+	this.loadMask.css({'left':(clientW-this.loadMask.width())/2+scorllL,'top':(clientH-this.loadMask.height())/2+scorllT,'display':'block'});
+
+	this.menban.fadeIn(300);
+
+	if(!This.setting.autoClose)return;
+
+	this.menban.click(function(){
+		This.closeFn();
+	})
+
+}
+
+Dialog.prototype.creatMask = function(){	//创建iframe弹出窗口
+	var This=this;
+	var setting = This.setting;
+
+	if($('#maskDiv').length == 0)
+	{
+		$('body').prepend('<div id="maskDiv"></div>');
+	}
+
+	setting.oMask = '#maskDiv';
+	$(setting.oMask).hide();
+
+
+	this.maskFrame =  document.createElement("iframe");
+	oMaskFrame = this.maskFrame;
+	oMaskFrame.src = setting.url;
+	oMaskFrame.style.width='100%';
+	oMaskFrame.style.height='100%';
+	$(oMaskFrame).attr({'scrolling':'no','allowtransparency':'true','frameborder':'0'});
+	//$(oMaskFrame).attr('allowtransparency','true');
+	//$(oMaskFrame).attr('frameborder','0');
+
+	loadFrame(oMaskFrame,function(){
+		This.setMaskData();
+		This.closeMask();
+	})
+	$(setting.oMask).html('');
+	$(setting.oMask).append(oMaskFrame);
+	if(!!window.ActiveXObject&&!window.XMLHttpRequest)
+	{
+		window.frames[0].location.reload();
+	}
+}
+
+Dialog.prototype.setMaskData = function(){	//设置弹出窗口参数
+	var This=this;
+	var setting = This.setting;
+
+	this.mask = $(setting.oMask);
+	var oMask = this.mask;
+
+	var clientW = $(window).width();
+	var clientH = $(window).height();
+	var maskH = setting.h ? setting.h : oMask.height();
+	var maskW = setting.w ? setting.w : oMask.width();
+
+	var t = (clientH-maskH)/2;
+	var l = (clientW-maskW)/2;
+
+	oMask.css({'position' : 'fixed' , 'width' : maskW , 'height' : maskH , 'overflow':'hidden' , 'zIndex':999,'top':t , 'left':l});
+
+	if(this.loadMask)this.loadMask.hide();
+
+	if(setting.effect == 'fade')
+	{
+		oMask.css({'top':t}).show().fadeIn(300);
+	}else if(setting.effect == 'down')
+	{
+		oMask.show().animate({'top':t},300);
+	}
+
+}
+
+
+
+Dialog.prototype.closeMask = function(){		//关闭弹出层  从主页控制iframe内部关闭按钮
+
+	var This = this;
+	var setting = This.setting;
+
+	var closeBtn = setting.isIfm ? $(This.maskFrame.contentWindow.document.body).find(setting.cloBtn) : $(setting.cloBtn);
+
+	if(!closeBtn.length||setting.isIfm)return;
+
+	closeBtn.click(function(){
+		This.closeFn();
+
+		return false;
+	})
+}
+
+Dialog.prototype.closeFn = function (){//关闭弹出层   从iframe内部控制 事件加载按钮上
+
+	var This = this;
+	var setting = This.setting;
+	var winH = $(window).height();
+	var oMask = This.mask;
+	var maskH = oMask.height();
+	This.bBtn  = false;
+
+	if(setting.effect == 'fade')
+	{
+		oMask.fadeOut(400,function(){
+			setting.isIfm&&oMask.html('');
+		});
+	}else if(setting.effect == 'down')
+	{
+		oMask.animate({'top':(winH-maskH)/2-50},300,function(){
+			oMask.hide();
+			setting.isIfm&&oMask.html('');
+		});
+	}
+
+	if(this.menban)
+	{
+		this.menban.fadeOut(400,function(){
+
+			This.setting = {		//默认参数
+				//iframe 必传参
+				'isIfm':false,	//默认不支持iFrame
+				'url' :'',		//iframe src
+				'w' : 0,		//宽度
+				'h' : 0,		//高度
+				//通用
+				'oMask':'#maskDiv',	//弹出层ID
+				'cloBtn':'.close',	//默认关闭按钮
+				'isMenB' : true,	//默认有遮罩层
+				'opacity' : 0.35,	//遮罩层透明度
+				'bg' : 'black',		//遮罩层颜色
+				'effect':'fade' 	//动画效果
+			}
+		});
+
+	}
+}
+
+Dialog.prototype.hide=function(){
+	this.mask.hide();
+	if(this.setting.isIfm)$(this.maskFrame).remove();
+	if(this.menban)this.menban.hide();
+}
+
+Dialog.prototype.skip = function(opt){	//iframe内部跳转到其他页面
+
+	var setting = this.setting;
+	var clientW = $(window).width();
+	var clientH = $(window).height();
+	var t = (clientH-opt.h)/2;
+	var l = (clientW-opt.w)/2;
+
+	$.extend( setting , opt ); //参数合并
+
+
+	if(setting.isIfm)
+	{$(this.maskFrame).remove();}
+
+	this.creatMask();
+}
+
+
+Dialog.prototype.scorllMove = function(){		//跟随滚动条效果
+
+	var This = this;
+	var timer = null;
+	var oMenban= This.menban;
+	var clientW,clientH,docH,scorllT,scorllL,t,l;
+
+	resetData();
+
+
+	$(window).resize(function(){
+		resetData();
+	})
+
+	function resetData()
+	{
+
+		var oLoadMask = This.loadMask;
+		var oMask=This.mask;
+		clientW = $(window).width();
+		clientH = $(window).height();
+		docH = $(document).height();
+		scorllT = $(window).scrollTop();
+		scorllL = $(window).scrollLeft();
+		t = (clientH-oMask.height())/2;
+		l = (clientW-oMask.width())/2;
+
+		if(oLoadMask)oLoadMask.css({'left':(clientW-oLoadMask.width())/2+scorllL,'top':(clientH-oLoadMask.height())/2+scorllT});
+
+		//clearTimeout(timer);
+		//timer = setTimeout(function(){
+		if(This.bBtn)
+		{
+			oMask.stop().animate({'top':t, 'left':l},300)
+		}
+		//},200);
+	}
+
+}
+
+
+function loadFrame(iframe,fn){		//加载iframe完成后回调函数
+
+	if(iframe.attachEvent)
+	{
+		iframe.attachEvent("onload", function(){
+			fn();
+		});
+	}
+	else
+	{
+		iframe.onload = function(){
+			fn();
+		};
+	}
+
+}
+

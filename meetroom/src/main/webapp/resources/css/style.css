@@ -1,0 +1,160 @@
+.wrap{padding-top: 30px;padding-bottom: 30px;}
+.minH700{min-height: 700px;}
+/*首页*/
+.index-nav{width:100%;height:70px;line-height: 70px;overflow:hidden;background:url(../img/nav-bg.png) repeat-x center;position: fixed;top:0;z-index:100;}
+.index-logo{height:70px;display: table;float:left;}
+.index-logo img{vertical-align: middle;}
+.index-nav-list{float: left;margin-left: 40px;}
+.index-nav-list a{padding-left: 20px;padding-right: 20px;color:#fff;}
+.index-nav-list a:hover{text-decoration: none;color:#f60;}
+
+.index-nav.fixed{background: #fff;}
+.index-nav.fixed .index-nav-list a{color:#333;}
+.index-nav.fixed .index-nav-list a:hover{text-decoration: none;color:#f60;}
+
+/*slider*/
+.banner-wrap{min-width:980px;margin-left: auto;margin-right: auto;height:550px;overflow: hidden;position: relative;}
+.banner-wrap img{display: block;margin-left: auto;margin-right: auto;}
+.bx-controls{position: absolute;bottom: 20px;left:50%;}
+.bx-pager{background-color: rgba(0,0,0,0.5);*background-color: #000;filter:alpha(opacity=50);height:18px;border-radius: 8px;padding-top: 0;line-height: 18px;padding-left: 23px;padding-right: 23px;}
+.bx-pager-item{padding-top: 4px;}
+
+.details-txt{width:390px;overflow: hidden;color:#333;} 
+.details-txt h1{font-size: 24px;font-weight: normal;margin-top: 100px;margin-bottom: 20px;}
+
+.footer-img{height:300px;width: 100%;overflow: hidden;background: #3E6485 url(../img/footerImg.jpg) no-repeat center;}
+
+/*弹层*/
+.layer-con{width:100%;height:100%;position:fixed;top:0;left: 0;z-index:1000;display: none;transition:.3s;}
+.layer-con .popupLayer{position: absolute;top:50%;left: 50%;}
+.layer-con .layer-mask{position: absolute;top:0;left:0;width: 100%;height: 100%;z-index: -1;background-color: #000;opacity:0.5;filter:alpha(opacity=50);}
+.layer-information{width:200px;margin-left: auto;margin-right: auto;}
+/**/
+.nav-main {height:55px;line-height:55px; position: relative; overflow:hidden; background-color:#3E6485; min-width:980px}
+.nav-main h1{color:#fff;font-size: 24px;font-weight: normal;}
+.nav-list { overflow:hidden;}
+.nav-list a{display: block; width: 110px; text-align: center; color: #fff; float: left;transition:.3s;}
+.nav-list a:hover { text-decoration: none; background: #5682A4;}
+.nav-list .nav-active { background: #5682A4;}
+
+
+.h2 .u-btn{padding:0 10px;margin-bottom: 10px;}
+/*.popupLayer .u-select .select-options-list{max-height: 144px;}
+*/
+.btn-vertify{height:48px;line-height: 48px;min-width: 140px;border:1px #E5E5E5 solid;text-align: center;color:#666;padding-left: 0;padding-right: 0;border-radius: 0;}
+.u-btn.lw{width: 195px;}
+.popupLayer  .u-btn.lw{width:240px;}
+
+.m-no-create{padding-top: 40px; font-size: 16px; color: #999; padding-bottom: 40px; text-align: center;}
+.m-no-create .ico{display: inline-block; vertical-align: middle; margin-right: 10px; height: 80px; width: 80px; background:  top center no-repeat;background-image: url(../img/table-create-none.png);}
+
+/*设置*/
+.person-list{margin-bottom: -10px;}
+.person-list span{display: inline-block;height:36px;line-height:36px;color:#666;background-color: #F2F2F2;margin-right: 10px;margin-bottom: 10px;padding-left:20px;padding-right:20px;text-align: center;position:relative;}
+.person-list.icon span{padding-left:10px;padding-right:32px;}
+.person-list span a{width:16px;height:16px;background: url(../img/icon-close.png) no-repeat;overflow: hidden;position: absolute;top:5px;right:5px;}
+
+/*选项卡*/
+.m-tab-hd{border-bottom:1px solid #E5E5E5; height: 41px;}
+.m-tab-hd .item{position: relative; padding-left: 40px; padding-right: 40px; height:40px; line-height: 40px; color: #666; text-decoration: none; border:1px solid #fff; border-bottom-color: #E5E5E5;}
+
+.m-tab1-hd .item{float: left;height:62px;width: 178px;padding-left: 30px;text-align: center;line-height: 62px;border-top:2px #E7E7E7 solid;background-color: #E7E7E7;color:#666;font-size:24px;text-decoration: none;position: relative;}
+.m-tab1-hd .item.active{border-top-color:#f60;background-color: #fff;color:#f60;}
+.m-tab1-hd .icon{display:inline-block;width:24px;height:30px;overflow:hidden;background: url(../img/tab-icon.png) no-repeat;position: absolute;top:50%;margin-top: -15px;left:40px;}
+.m-tab1-hd .icon-personal{background-position: 0 0;}
+.m-tab1-hd .icon-company{background-position: -24px 0;}
+.m-tab1-hd .item.active .icon-personal{background-position: 0 -30px;}
+.m-tab1-hd .item.active .icon-company{background-position: -24px -30px;}
+
+.m-tab2-hd {border-bottom:1px #E5E5E5 solid;height: 36px; text-align: center;}
+.m-tab2-hd .item{display:inline-block;height:34px;width: 80px;text-align: center;line-height: 34px;margin-left: 50px;margin-right: 50px;border-bottom:2px #fff solid;color:#333;font-size:20px;text-decoration: none;position: relative;}
+.m-tab2-hd .item.active{border-bottom-color:#f60;}
+.m-tab2-hd .icon{display:inline-block;width:24px;height:30px;overflow:hidden;background: url(../img/tab-icon.png) no-repeat;position: absolute;top:50%;margin-top: -15px;left:40px;}
+.m-tab1-hd .icon-personal{background-position: 0 0;}
+.m-tab1-hd .icon-company{background-position: -24px 0;}
+.m-tab1-hd .item.active .icon-personal{background-position: 0 -30px;}
+.m-tab1-hd .item.active .icon-company{background-position: -24px -30px;}
+
+.personal-account{margin-top: 40px;}
+.personal-account .m-tab2-con{margin-top: 45px;margin-bottom: 45px;margin-left: 270px;}
+.company-account{width:500px;margin-left: auto;margin-right: auto;margin-top: 100px;}
+
+/*会议室预定*/
+.icon-date{display:inline-block;height:22px;width: 22px;overflow: hidden;background:url(../img/icon-date.png) no-repeat center;}
+.icon-instructions{display:inline-block;height:16px;width: 16px;overflow: hidden;background:url(../img/icon-instructions.png) no-repeat center;}
+
+.metting-reservation-hd{border:1px #efefef solid;padding:12px;height:38px;line-height: 38px;position: relative;z-index:2;}
+.metting-reservation-hd .u-btn{position: absolute;right:12px;top:12px;}
+
+.metting-date{width:340px;font-size: 16px;margin-left: auto;margin-right: auto;text-align: center;position:relative;}
+.metting-date .prev{float: left;font-size: 24px;color:#D9D9D9;margin-left: 20px;cursor: pointer;}
+.metting-date .next{float: right;font-size: 24px;color:#D9D9D9;margin-right: 20px;cursor: pointer;}
+.metting-date .icon-date{position: relative;top:4px;}
+
+.metting-reservation-bd{}
+
+.figure-note li{float: left;font-size: 12px;margin-right: 20px;}
+.ticket-square{display:inline-block;height: 11px;width:11px;background-color: #fff;border:1px #eee solid;border-radius: 2px;vertical-align: middle; margin-right: 6px;}
+
+.metting-time .time{float: left;width:46px;text-align: center;}
+
+.metting-name-list{border-top:1px #E5E5E5 solid;border-left:1px #E5E5E5 solid;border-right:1px #E5E5E5 solid;width:273px;overflow:hidden;margin-top: 20px;}
+.metting-name{border-bottom:1px #E5E5E5 solid;height:38px;line-height: 38px;padding-left: 15px;padding-right: 15px;}
+
+.metting-data-table{width:690px;border-top:1px #eee solid;border-left:1px #eee solid;margin-top: 20px;}
+.metting-data-table tr td{width:22px;height:38px;border-right:1px #eee solid;border-bottom:1px #eee solid;}
+.metting-data-table td.mybook{background-color: #47C978;cursor:pointer;position:relative;z-index:1;}
+.metting-data-table td.booked{background-color: #E5E5E5;}
+.metting-data-table .icon-instructions{display: none;}
+.metting-data-table td.mybook:hover .icon-instructions{display:block;}
+
+.metting-explain{display:none;position:absolute;top:-138px;left:-103px;width:188px;height:118px;padding:10px 15px;text-align:left;background:url(../img/explain-bg.png) no-repeat center;}
+.metting-data-table td.mybook:hover .metting-explain{display:block;}
+
+/*chart*/
+.calendar .view {position: absolute;top: 0;left: 0;overflow:hidden;}
+.calendar-d .view-month,
+.calendar-m .view-date {visibility: hidden;z-index: 1;}
+.calendar-d .view-date,
+.calendar-m .view-month {visibility: visible;z-index: 2;}
+.calendar-views .week,
+.calendar-views .days {overflow: hidden;}
+.calendar-views {width: 100%;}
+.calendar .view,
+.calendar-display,
+.calendar-arrow .prev,
+.calendar .date-items li {float: left;}
+.calendar-arrow,
+.calendar-arrow .next {float: right;}
+
+.calendar-modal{display: none;position: absolute;background: #fff;border: 1px solid #ccc;}
+
+.calendar-hd {width:100%;padding: 20px 0;height: 24px;line-height: 24px;overflow: hidden;position: relative;}
+.calendar-display{width: 100%;display:block;font-size: 16px;color:#666;text-align: center;}
+.calendar-arrow {width: 100%;position: absolute;top:20px;}
+.calendar-arrow span{cursor:pointer;color:#D9D9D9;}
+.calendar-arrow .prev{float: left;margin-left: 20px;font-size: 24px;}
+.calendar-arrow .next{float: right;margin-right: 20px;font-size: 24px;}
+
+.calendar-ct{overflow: hidden;}
+.calendar-views .week{color:#333;}
+.calendar ol li{position: relative;float: left;text-align: center;border-radius: 2px;}
+.calendar-views .days li:hover{background-color:#eee;}
+.calendar-views .days li{margin:1px;font-size: 12px;color:#666;background-color: #FBFBFB;}
+.calendar-views .days .old,.calendar-views .days .new{color:#F1F1F1;background-color: #fff;}
+.calendar-views .days li.old:hover,.calendar-views .days li.new:hover{background-color: #fff;}
+.calendar .calendar-views .now {color:#333;background: #eee!important;}
+.calendar .calendar-views .selected {color: #fff;background: #47C978!important;}
+.view-month .calendar-hd {padding: 20px;}
+
+.calendar li[disabled] {color: #bbb;}
+.calendar li.old[disabled],.calendar li.new[disabled] {color: #eee;}
+.calendar-views .days li[data-calendar-day],.calendar-views .view-month li[data-calendar-month] {cursor: pointer;} 
+.calendar li[disabled] {cursor: not-allowed;}
+
+.calendar .calendar-views .dot {position: absolute;left: 50%;bottom: 4px;margin-left: -2px;width: 4px;height: 4px;background: #FF808E;border-radius: 50%;}
+.calendar-views .now .dot {background: #fff;}
+.calendar .date-items {width: 300%;margin-left: -100%;}
+.calendar-label {display: none;position: absolute;top: 50%;left: 50%;z-index: 2; padding: 5px 10px;line-height: 22px;color: #fff;background: #000;border-radius: 3px; opacity: .7;filter: alpha(opacity=70);}
+.calendar-label i {display: none; position: absolute;left: 50%;bottom: -12px;width: 0;height: 0;margin-left: -3px;border: 6px solid transparent;border-top-color: #000;}
+

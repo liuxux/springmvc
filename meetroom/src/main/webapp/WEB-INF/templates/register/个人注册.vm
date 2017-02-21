@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="webkit" name="renderer">
+    <title>个人账户-手机注册</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+
+<body>
+
+<!-- header start -->
+<script type="text/javascript" src="./temp/header-register.js"></script>
+<!-- header end -->
+
+<!-- content start -->
+<div class="bgc3 wrap">
+    <div class="container bgc1">
+        <div class="m-tab1-hd clearfix">
+            <a href="javascript:;" class="item active"><i class="icon icon-personal"></i>个人账户</a>
+            <a href="javascript:;" class="item"><i class="icon icon-company"></i>企业账户</a>
+        </div>
+        <div class="m-tab1-con personal-account">
+            <div class="m-tab2-hd clearfix">
+                <a href="javascript:;" class="item active">手机注册</a>
+            </div>
+            <div class="m-tab2-con">
+                <div class="m-form m-form-label-tr">
+                    <div class="form-group">
+                        <label class="control-label col-6">手机号</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg error" type="text" placeholder="请输入手机号" style="width: 293px;">
+                            <span class="f12 ml10 c7">请输入手机号！</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-6">短信验证码</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="请输入手机号" style="width: 141px;">
+                            <a href="javascript:;" class="u-btn u-btn-default btn-vertify ml6">发送验证码</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-6">用户名</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="用户名不可重复"
+                                   id="username" name="username" class="text"
+                                   onblur="checkUsername();" style="width: 293px;">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-6">设置密码</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="6-12位，字母数字或字符" style="width: 293px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-6">确认密码</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="请再次填写密码" style="width: 293px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-6">邮箱地址</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="邮箱@email.com" style="width: 293px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-6">公司名称</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="请输入公司或团队名称" style="width: 293px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-6">授权码</label>
+                        <div class="col-offset-6">
+                            <input class="u-txt lg" type="text" placeholder="请输入所属公司授权码" style="width: 293px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-offset-6">
+                            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>同意遵守<a href="#">《服务条款》</a></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-offset-6">
+                            <a href="#" class="u-btn lg lw u-btn-primary">注册</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- content end -->
+
+<!-- footer start -->
+<script type="text/javascript" src="./temp/footer.js"></script>
+<!-- footer end -->
+
+<!--[if lt IE 9]>
+<script src="js/placeholder.js"></script>
+<![endif]-->
+
+</body>
+<script src="js/page.js"></script>
+<script>
+    function checkUsername(){
+        var username = document.getElementById("username").value;
+        if(username!=null && username!=''){
+            //1.创建对象
+            var xmlhttp;
+            if (window.XMLHttpRequest){
+                xmlhttp=new XMLHttpRequest();
+            }else{
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            //2.设置监听
+            xmlhttp.onreadystatechange=function(){
+                if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                    document.getElementById("spanUsername").innerHTML=xmlhttp.responseText;
+                }
+            }
+            //3.打开链接
+            var url = "${pageContext.request.contextPath}/user_findByUsername?time="+new Date().getTime()+"&username=" + username;
+            xmlhttp.open("GET",url,true);
+
+            //4.发送
+            xmlhttp.send(null);
+        }else{
+            document.getElementById("spanUsername").innerHTML="<font color='red'>用户名不能为空</font>";
+        }
+    }
+    $(function(){
+        $('.btn-vertify').click(function(){
+            if($(this).hasClass('disabled'))return;
+            var $this = $(this);
+            var i=60;
+            var sTxt1='<span>'+i+'</span>s后重新发送';
+            var sTxt2='发送验证码';
+                $this.addClass('disabled').html(sTxt1);
+            oTime=setInterval(function(){
+                i--;
+                    $this.find('span').html(''+i);
+                if(i==0){
+                    clearInterval(oTime);
+                        $this.removeClass('disabled').html(sTxt2);
+                }
+            },1000)
+        });
+        $('.u-checkbox').checkbox();
+    })
+
+</script>
+</html>

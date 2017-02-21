@@ -1,0 +1,245 @@
+/*
+	弹窗组件:依赖于jquery
+	参数：
+		isIfm			//是否为iframe弹出层    默认为false,
+		url,w,h			//iframe弹出层必传参,
+		oPop			//指定弹出层窗口，		jquery选择器都可行
+		cloBtn			//默认关闭按钮			.close
+		hasMask			//默认为true  		有遮罩层
+		opacity			//透明度  			默认0.35
+		maskBg				//遮罩层背景颜色		默认黑色
+		effect 			//动画效果  			fade：淡入淡出     down：从浏览器窗口最上方滑下
+	方法：
+		init()			//弹出层初始化并弹出
+		closeFn()		//iframe内调用关闭弹出层
+		skip();			//iframe内跳转连接
+*/
+
+(function($) {
+	$.fn.extend({
+		dialog: function(opt) {
+			$(this).click(function() {
+				var d1 = new Dialog(); //实例化
+				d1.init(opt);
+				return false;
+			})
+		}
+	})
+})(jQuery)
+
+var dialog = new Dialog();
+
+function Dialog() {
+
+	this.oPop = null; //弹出层窗口
+	this.oMask = null; //遮罩层
+
+	this.setting = { //默认参数
+		//iframe 必传参
+		'isIfm': false, //默认不支持iFrame
+		'url': '', //iframe src
+		'w': 0, //宽度
+		'h': 0, //高度
+		//通用
+		'oPop': '#popup-con', //弹出层ID
+		'cloBtn': '.close', //默认关闭按钮
+		'hasMask': true, //默认有遮罩层
+		'opacity': 0.35, //遮罩层透明度
+		'maskBg': 'black', //遮罩层颜色
+		'autoClose': false,
+		'effect':'fade',
+		'popBg':'#fff'
+	}
+
+}
+
+Dialog.prototype.init = function(opt) {
+	var self = this;
+	var setting = self.setting;
+
+	$.extend(self.setting, opt); //参数合并
+
+	setting.hasMask && self.creatMask();
+	self.creatPopup();
+	setting.isIfm && self.creatIframe();
+	self.setPopupStyle();
+	self.showPop();
+}
+
+
+Dialog.prototype.creatMask = function() { //创建遮罩层并设置样式
+	var setting = this.setting;
+
+	this.oMask = $('<div id="popup-mask"></div>');
+	this.oMask.css({
+		'position': 'fixed',
+		'width': '100%',
+		'height': '100%',
+		'left': 0,
+		'top': 0,
+		'background':setting.maskBg,
+		'opacity':setting.opacity,
+		'display':'none',
+		'zIndex':998
+	});
+	this.oMask.appendTo($('body'));
+}
+
+Dialog.prototype.creatPopup = function() { //创建弹层
+	var self = this;
+	var setting = self.setting;
+
+	if(setting.isIfm)//判断是否是iframe弹层
+	{
+		self.oPop = $('<div id="popup-con"></div>');
+		self.oPop.appendTo($('body'));
+	}else{
+		self.oPop = $(setting.oPop);
+		self.closePop();
+	}
+
+	self.oPop.css({
+		'position': 'fixed',
+		'transition':'.3s',
+		'left':'50%',
+		'top':'50%',
+		'zIndex':999,
+		'background':setting.popBg,
+		'display':'none'
+	});
+}
+
+Dialog.prototype.setPopupStyle = function(){
+	var self = this;
+	var setting = self.setting;
+	var w,h;
+
+	w = setting.w || self.oPop.width();
+	h = setting.h || self.oPop.height();
+	self.oPop.css({
+		'width': w,
+		'height': h,
+		'marginLeft':-w/2,
+		'marginTop':-h/2
+	});
+}
+
+Dialog.prototype.creatIframe = function(){
+	var self = this;
+	var setting = self.setting;
+	var oIframe = document.createElement("iframe")
+	self.oIframe = $(oIframe);
+	oIframe.src = setting.url;
+	oIframe.style.width='100%';
+	oIframe.style.height='100%';
+	self.oIframe.attr({'scrolling':'no','allowtransparency':'true','frameborder':'0'});
+	self.oIframe.appendTo(self.oPop);
+	loadFrame(oIframe,function(){
+		self.closePop();
+	})
+}
+
+Dialog.prototype.showPop = function(){
+	var setting = this.setting;
+	if(setting.effect=='fade'){
+		this.oPop.add(this.oMask).fadeIn('fast');
+	}else{
+		this.oPop.add(this.oMask).show();
+	}
+}
+
+Dialog.prototype.closePop = function() {
+	var self = this;
+	var setting = self.setting;
+	//var oClose = self.oPop.find(setting.cloBtn);	
+	var oClose = setting.isIfm ? $(self.oIframe[0].contentWindow.document.body).find(setting.cloBtn) : self.oPop.find(setting.cloBtn);
+
+	if(oClose.length<1)return;
+
+	oClose.one('click', function(event) {
+		self.closeFn();
+	});
+}
+
+Dialog.prototype.closeFn = function() { //关闭弹出层  从iframe内部控制 事件加载按钮上
+	var self = this;
+	var setting = self.setting;
+	if(setting.isIfm){
+		if(setting.effect=='fade'){
+			self.oPop.add(self.oMask).fadeOut('fast',function(){
+				$(this).remove();
+			});
+		}else{
+			self.oPop.add(self.oMask).remove();
+		}
+	}else{
+		if(setting.effect=='fade'){
+			self.oPop.fadeOut('fast',function(){
+				$(this).css({'width':'auto','height':'auto'})
+			});
+			self.oMask.fadeOut('fast', function() {
+				$(this).remove();
+			});
+		}else{
+			self.oPop.hide();
+			self.oMask.remove();
+		}
+	}
+
+	self.setting = { //默认参数
+		'isIfm': false, //默认不支持iFrame
+		'url': '', //iframe src
+		'w': 0, //宽度
+		'h': 0, //高度
+		//通用
+		'oPop': '#popup-con', //弹出层ID
+		'cloBtn': '.close', //默认关闭按钮
+		'hasMask': true, //默认有遮罩层
+		'opacity': 0.35, //遮罩层透明度
+		'maskBg': 'black', //遮罩层颜色
+		'autoClose': false,
+		'effect':'fade',
+		'popBg':'#fff'
+	}
+}
+
+
+Dialog.prototype.skip = function(opt) { //w,h,url,
+	var self = this;
+
+	$.extend(self.setting, opt);
+
+	var setting = self.setting;
+
+	if(setting.isIfm){
+		self.oIframe.remove();
+		self.creatIframe();
+	}else{
+		self.oPop.hide();
+		self.oPop = $(setting.oPop).show();
+		self.oPop.css({
+			'position': 'fixed',
+			'left':'50%',
+			'top':'50%',
+			'zIndex':999
+		});
+		self.closePop();
+	}
+
+	self.setPopupStyle();
+}
+
+
+function loadFrame(iframe, fn) { //加载iframe完成后回调函数
+
+	if (iframe.attachEvent) {
+		iframe.attachEvent("onload", function() {
+			fn();
+		});
+	} else {
+		iframe.onload = function() {
+			fn();
+		};
+	}
+
+}

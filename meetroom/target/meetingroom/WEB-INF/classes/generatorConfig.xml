@@ -45,6 +45,7 @@
         <table tableName="meetingroom"></table>
         <table tableName="user"></table>
         <table tableName="meetingroom-device"></table>
-        <table tableName="boardroomtime"></table>
+        <table tableName="boardroomTime"></table>
+        <table tableName="boardroomschedulerecord"></table>
     </context>
 </generatorConfiguration>

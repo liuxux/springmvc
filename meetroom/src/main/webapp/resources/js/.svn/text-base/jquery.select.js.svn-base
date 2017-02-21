@@ -1,0 +1,142 @@
+/**
+ * Created by Jemmy.tang on 2016/8/11.
+ * 1.自定义select下拉框插件     $().select(function(){})
+ * 2.刷新自定义select            $().selectUpdate();
+ */
+(function($){
+    $.fn.extend({
+        select: function(opt){
+            this.each(function(){
+
+                var oOriginSelect = $(this).find('select');//原生的select
+                var aOriginOptions = oOriginSelect.find('option');//原生所有option
+                var oOriginSelected = oOriginSelect.find('option:selected');//原生选中的option
+                var oSelect=null, oSelectOptions = null;
+                var $this = $(this);
+
+                var init = function(){
+                    renderSelectText();
+                    renderOptions();
+
+
+                    oSelect.click(function(){
+                        aOriginOptions = oOriginSelect.find('option')
+                        if(oOriginSelect.is(':disabled') || aOriginOptions.length<1){
+                            return;
+                        }
+                        $('.u-select').removeClass('on');
+                        $this.addClass('on');
+                        return false;
+                    });
+
+                    $(document).click(function(){
+                        $this.removeClass('on');
+                    });
+
+                    oSelectOptions.delegate('li', 'click',function(){
+
+                        var txt = $(this).text();
+                        var val = $(this).attr('data-value') || txt;
+
+                        if(txt == oOriginSelect.find('option:selected').text())return;
+
+                        $(this).addClass('selected').siblings().removeClass('selected');
+                        oSelect.find('.selected-txt').text(txt);
+                        oOriginSelect.val(val);
+                        opt && opt.change && opt.change.call(oOriginSelect);
+                    })
+                }
+
+                var renderSelectText = function(){//渲染选中内容区域
+                    if(oOriginSelect.is(':disabled')){
+                        $this.addClass('disabled');
+                    }
+                    var selectTxtHtml = '<div class="select-text">'+
+                                            '<div class="selected-txt">'+ oOriginSelected.text() +'</div>'+
+                                            '<i class="ico"></i>'+
+                                        '</div>';
+
+
+                    oSelect = $(selectTxtHtml);
+
+                    oSelect.insertBefore(oOriginSelect);
+                }
+
+                var renderOptions = function(){//渲染options
+                    var optionsHtml = '<div class="select-options"><ul class="select-options-list">';
+                    var originVal = oOriginSelect.val();
+                    var bBtn = true;
+                    aOriginOptions.each(function() {
+                        var text = $(this).text();
+                        var optionVal = $(this).attr('value');
+                        var sDataVal = optionVal ? ('data-value="'+ optionVal +'"') :'';
+                        var sClass = 'item';
+
+
+                        if(bBtn && (originVal == text || originVal == optionVal)){
+                            sClass = 'item selected'
+                            bBtn = false;
+                        }
+
+                        optionsHtml += '<li title="'+ text +'"'+ sDataVal +' class="' + sClass + '">'+ text +'</li>';
+                    });
+                    optionsHtml += '</ul></div>'
+
+                    oSelectOptions = $(optionsHtml);
+
+                    oSelectOptions.insertBefore(oOriginSelect);
+                }
+
+
+                init();
+
+            })  
+
+            return this;
+        },
+
+        /*
+        *刷新自定义select
+         */
+        selectUpdate: function(){
+
+            this.each(function(index, el) {
+                var oOriginSelect = $(this).find('select');//原生的select
+                var oOption = $(this).find('.select-options-list');
+                var aOriginOptions = $(this).find('select option');
+                var oOriginSelected = oOriginSelect.find('option:selected');//原生选中的option
+                var oTxt = $(this).find('.selected-txt');
+                oTxt.text(oOriginSelected.text());
+
+                var renderOptions = function(){
+                    var optionsHtml = '';
+                    var originVal = oOriginSelect.val();
+                    var bBtn = true;
+
+                    aOriginOptions.each(function() {
+                        var text = $(this).text();
+                        var optionVal = $(this).attr('value');
+                        var sDataVal = optionVal ? ('data-value="'+ optionVal +'"') :'';
+                        var sClass = 'item';
+
+
+                        if(bBtn && (originVal == text || originVal == optionVal)){
+                            sClass = 'item selected';
+                            bBtn = false;
+                        }
+
+                        optionsHtml += '<li title="'+ text +'"'+ sDataVal +' class="' + sClass + '">'+ text +'</li>';
+                    });
+
+                    oOption.html(optionsHtml);
+                }
+
+                renderOptions();
+
+            });
+
+            return this;
+        }
+    });
+    
+})(jQuery);
