@@ -1,0 +1,179 @@
+/** 
+ * @file   notifications.js
+ * @summary		这是一个基于原生js的弹窗插件,一些关键的地方都有注释 
+ * @param  	  
+ * 			disabledElement		//在控件显示时禁用的点击元素（js元素）
+			autoClose			//是否自动关闭（boolean  默认: true）
+			isLoad				//是否需要加载（boolean  默认: false）
+            delay				//延时时间（ms  默认: 3000）
+            bgc					//控件背景色（默认: '#000'）
+            opacity				//控件背景色透明度（默认: '0.8'）
+            padding				//控件的padding值（默认: '20px 30px'）
+            content				//控件的内容（html）
+			loadFn				//加载完成后的回调函数
+ * 
+ * @author  papillon
+ * @time  2016.9.21
+ */
+;(function(win){
+
+	function Notifications(opt){
+		this.init(opt);
+		this.render(true);//控价渲染
+	}
+	Notifications.prototype = {
+		init: function(option) { //初始化基本信息 
+			var oDefault = {
+				disabledElement: null,
+				autoClose: true,
+                delay: 3000,
+                bgc:'#000',
+                opacity: '0.8',
+                padding: '20px 30px',
+                content: '对不起，请求错误！请重新操作！！！',
+				loadFn:null
+			};
+			var _option = this.extendObject(oDefault, arguments[0]); //传入options设置默认参数
+			this.sEle = _option.disabledElement;
+			this.autoClose = _option.autoClose;
+			this.delay = _option.delay;
+			this.bgc = _option.bgc;
+			this.opacity = _option.opacity;
+			this.padding = _option.padding;
+			this.content = _option.content;
+			this.loadFn = _option.loadFn;
+
+			this.sDivId = 'floater' + new Date().getTime(); //加载控件的div的id
+		},
+		//渲染一些必须的节点
+		render: function(isAnimate) {
+			var that = this;
+			//生成一个对应的div
+			if(that.sDivId) {
+				var domDiv = that.createElement('div');
+				domDiv.id = that.sDivId;
+				domDiv.innerHTML = that.content;
+				document.body.appendChild(domDiv);
+				
+				that.setStyle(domDiv,{background : that.bgc, padding: that.padding, borderRadius: '12px', position:'fixed', left:'50%', top:'50%', color: '#fff', opacity: '0', maxWidth: '360px', lineHeight: '24px', fontSize: '16px',marginLeft: that.id_selector(this.sDivId).offsetWidth*(-0.5) +'px',zIndex: 999})
+				that.setStyle(domDiv,{marginLeft: that.id_selector(this.sDivId).offsetWidth*(-0.5) +'px', marginTop: that.id_selector(this.sDivId).offsetHeight*(-0.5) +'px'});
+
+				isAnimate?setTimeout(function(){that.setStyle(domDiv,{opacity:that.opacity,transition:'0.2s'})},200):that.setStyle(domDiv,{opacity:that.opacity});
+				//加载之后才能将domDiv赋值为 
+				this.domDiv = that.id_selector(that.sDivId);
+				that.autoClose&&that.delayToClose(that.domDiv);
+				that.sEle&&that.disableElement(that.sEle);
+				if(document.getElementsByClassName&&this.domDiv.getElementsByClassName('close').length>0){
+					this.domDiv.getElementsByClassName('close')[0].onclick = function(){
+						that.close();
+					}
+				}
+			}
+		},
+		//延时关闭
+		delayToClose: function(domDiv){
+			var that = this;
+			setTimeout(function(){
+				that.close(true);
+			},that.delay);
+		},
+		//id选择器
+        id_selector:function (selector){
+            return document.getElementById(selector);
+        },
+        //class选择器
+        cl_selector:function (selector){
+            return document.getElementsByClassName(selector);
+        },
+        //创建节点
+        createElement:function(node){
+            return document.createElement(node);
+        },
+        //批量添加样式（使用JSON）
+        setStyle: function(el, json){
+		    for(var i in json){
+		    		el.style[i]=json[i];
+		    }
+		},
+		//禁用按钮
+		disableElement: function(ele){
+			ele.disabled = true;
+		},
+		//启用按钮
+		enableElement: function(ele){
+			ele.disabled = false;
+		},
+		//更改内容
+		changeTxt: function(content){
+			this.autoClose = true;
+			this.close();
+			this.content = content;
+			this.render();
+		},
+        //关闭弹层
+        close:function(isAnimate){
+	    		var that = this;
+	    		that.sEle&&that.enableElement(that.sEle);
+			if(isAnimate){
+				that.setStyle(that.domDiv,{'opacity':'0',transition:'0.2s'});
+				setTimeout(function(){that.domDiv.parentNode&&that.domDiv.parentNode.removeChild(that.domDiv);},200)
+			}else{
+				that.domDiv.parentNode&&that.domDiv.parentNode.removeChild(that.domDiv);
+			}
+        },
+        //判断是否为空对象
+        isEmptyObject: function(target) {
+            var key;
+            for (key in target) {
+                return !1;
+            }
+            return !0;
+        },
+        //合并对象(浅复制)
+        extendObject: function() {
+        	var that = this;
+            var arg = arguments,
+                argLen = arg.length,
+                target = arg[0],
+                newObj = arg[1],
+                isOverRide = (arg[argLen - 1] && typeof arg[argLen - 1] === 'boolean') ? arg[argLen - 1] : false,
+                tmp = {},
+                i;
+            var isArray = function(obj) {
+                    return Object.prototype.toString.call(obj) === '[object Array]';
+                }
+            //排除将要合并的对象是空对象或者是数组
+            if (argLen == 0 || (typeof arg[0] !== 'object') || that.isEmptyObject(newObj) || (isArray(arg[0]))) {
+                return target;
+            }
+            for (i in target) {
+                if (target.hasOwnProperty(i)) {
+                    if (isOverRide) {
+                        for (var m in newObj) {
+                            if (newObj.hasOwnProperty(m)) {
+                                if (i == m) {
+                                    target[i] = newObj[m];
+                                }
+                            }
+                        }
+                    } else {
+                        tmp[i] = target[i];
+                        for (var k in newObj) {
+                            if (newObj.hasOwnProperty(k)) {
+                                if (i == k) {
+                                    tmp[i] = newObj[k];
+                                } else {
+                                    tmp[k] = newObj[k];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return isOverRide ? target : tmp;
+        }
+	}
+
+	win.Notifications = Notifications;
+
+})(window)

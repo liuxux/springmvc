@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.practise.meetingroom.dao.TimeMapper" >
+  <resultMap id="BaseResultMap" type="com.practise.meetingroom.model.Time" >
+    <id column="time_id" property="timeId" jdbcType="INTEGER" />
+    <result column="meetingroom_id" property="meetingroomId" jdbcType="INTEGER" />
+    <result column="topicName" property="topicname" jdbcType="VARCHAR" />
+    <result column="meetingroom_name" property="meetingroomName" jdbcType="VARCHAR" />
+    <result column="time1" property="time1" jdbcType="BIT" />
+    <result column="time2" property="time2" jdbcType="BIT" />
+    <result column="time3" property="time3" jdbcType="BIT" />
+    <result column="time4" property="time4" jdbcType="BIT" />
+    <result column="time5" property="time5" jdbcType="BIT" />
+    <result column="time6" property="time6" jdbcType="BIT" />
+    <result column="time7" property="time7" jdbcType="BIT" />
+    <result column="time8" property="time8" jdbcType="BIT" />
+    <result column="time9" property="time9" jdbcType="BIT" />
+    <result column="time10" property="time10" jdbcType="BIT" />
+    <result column="time11" property="time11" jdbcType="BIT" />
+    <result column="time12" property="time12" jdbcType="BIT" />
+    <result column="time13" property="time13" jdbcType="BIT" />
+    <result column="time14" property="time14" jdbcType="BIT" />
+    <result column="time15" property="time15" jdbcType="BIT" />
+    <result column="time16" property="time16" jdbcType="BIT" />
+    <result column="time17" property="time17" jdbcType="BIT" />
+    <result column="time18" property="time18" jdbcType="BIT" />
+    <result column="time19" property="time19" jdbcType="BIT" />
+    <result column="time20" property="time20" jdbcType="BIT" />
+    <result column="time21" property="time21" jdbcType="BIT" />
+    <result column="time22" property="time22" jdbcType="BIT" />
+    <result column="time23" property="time23" jdbcType="BIT" />
+    <result column="time24" property="time24" jdbcType="BIT" />
+    <result column="time25" property="time25" jdbcType="BIT" />
+    <result column="time26" property="time26" jdbcType="BIT" />
+    <result column="time27" property="time27" jdbcType="BIT" />
+    <result column="time28" property="time28" jdbcType="BIT" />
+    <result column="time29" property="time29" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    time_id, meetingroom_id, topicName, meetingroom_name, time1, time2, time3, time4, 
+    time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, 
+    time16, time17, time18, time19, time20, time21, time22, time23, time24, time25, time26, 
+    time27, time28, time29
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.practise.meetingroom.model.TimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from time
+    where time_id = #{timeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from time
+    where time_id = #{timeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.practise.meetingroom.model.TimeExample" >
+    delete from time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.practise.meetingroom.model.Time" >
+    insert into time (time_id, meetingroom_id, topicName, 
+      meetingroom_name, time1, time2, 
+      time3, time4, time5, time6, 
+      time7, time8, time9, time10, 
+      time11, time12, time13, time14, 
+      time15, time16, time17, time18, 
+      time19, time20, time21, time22, 
+      time23, time24, time25, time26, 
+      time27, time28, time29)
+    values (#{timeId,jdbcType=INTEGER}, #{meetingroomId,jdbcType=INTEGER}, #{topicname,jdbcType=VARCHAR}, 
+      #{meetingroomName,jdbcType=VARCHAR}, #{time1,jdbcType=BIT}, #{time2,jdbcType=BIT}, 
+      #{time3,jdbcType=BIT}, #{time4,jdbcType=BIT}, #{time5,jdbcType=BIT}, #{time6,jdbcType=BIT}, 
+      #{time7,jdbcType=BIT}, #{time8,jdbcType=BIT}, #{time9,jdbcType=BIT}, #{time10,jdbcType=BIT}, 
+      #{time11,jdbcType=BIT}, #{time12,jdbcType=BIT}, #{time13,jdbcType=BIT}, #{time14,jdbcType=BIT}, 
+      #{time15,jdbcType=BIT}, #{time16,jdbcType=BIT}, #{time17,jdbcType=BIT}, #{time18,jdbcType=BIT}, 
+      #{time19,jdbcType=BIT}, #{time20,jdbcType=BIT}, #{time21,jdbcType=BIT}, #{time22,jdbcType=BIT}, 
+      #{time23,jdbcType=BIT}, #{time24,jdbcType=BIT}, #{time25,jdbcType=BIT}, #{time26,jdbcType=BIT}, 
+      #{time27,jdbcType=BIT}, #{time28,jdbcType=BIT}, #{time29,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.practise.meetingroom.model.Time" >
+    insert into time
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="timeId != null" >
+        time_id,
+      </if>
+      <if test="meetingroomId != null" >
+        meetingroom_id,
+      </if>
+      <if test="topicname != null" >
+        topicName,
+      </if>
+      <if test="meetingroomName != null" >
+        meetingroom_name,
+      </if>
+      <if test="time1 != null" >
+        time1,
+      </if>
+      <if test="time2 != null" >
+        time2,
+      </if>
+      <if test="time3 != null" >
+        time3,
+      </if>
+      <if test="time4 != null" >
+        time4,
+      </if>
+      <if test="time5 != null" >
+        time5,
+      </if>
+      <if test="time6 != null" >
+        time6,
+      </if>
+      <if test="time7 != null" >
+        time7,
+      </if>
+      <if test="time8 != null" >
+        time8,
+      </if>
+      <if test="time9 != null" >
+        time9,
+      </if>
+      <if test="time10 != null" >
+        time10,
+      </if>
+      <if test="time11 != null" >
+        time11,
+      </if>
+      <if test="time12 != null" >
+        time12,
+      </if>
+      <if test="time13 != null" >
+        time13,
+      </if>
+      <if test="time14 != null" >
+        time14,
+      </if>
+      <if test="time15 != null" >
+        time15,
+      </if>
+      <if test="time16 != null" >
+        time16,
+      </if>
+      <if test="time17 != null" >
+        time17,
+      </if>
+      <if test="time18 != null" >
+        time18,
+      </if>
+      <if test="time19 != null" >
+        time19,
+      </if>
+      <if test="time20 != null" >
+        time20,
+      </if>
+      <if test="time21 != null" >
+        time21,
+      </if>
+      <if test="time22 != null" >
+        time22,
+      </if>
+      <if test="time23 != null" >
+        time23,
+      </if>
+      <if test="time24 != null" >
+        time24,
+      </if>
+      <if test="time25 != null" >
+        time25,
+      </if>
+      <if test="time26 != null" >
+        time26,
+      </if>
+      <if test="time27 != null" >
+        time27,
+      </if>
+      <if test="time28 != null" >
+        time28,
+      </if>
+      <if test="time29 != null" >
+        time29,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="timeId != null" >
+        #{timeId,jdbcType=INTEGER},
+      </if>
+      <if test="meetingroomId != null" >
+        #{meetingroomId,jdbcType=INTEGER},
+      </if>
+      <if test="topicname != null" >
+        #{topicname,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingroomName != null" >
+        #{meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="time1 != null" >
+        #{time1,jdbcType=BIT},
+      </if>
+      <if test="time2 != null" >
+        #{time2,jdbcType=BIT},
+      </if>
+      <if test="time3 != null" >
+        #{time3,jdbcType=BIT},
+      </if>
+      <if test="time4 != null" >
+        #{time4,jdbcType=BIT},
+      </if>
+      <if test="time5 != null" >
+        #{time5,jdbcType=BIT},
+      </if>
+      <if test="time6 != null" >
+        #{time6,jdbcType=BIT},
+      </if>
+      <if test="time7 != null" >
+        #{time7,jdbcType=BIT},
+      </if>
+      <if test="time8 != null" >
+        #{time8,jdbcType=BIT},
+      </if>
+      <if test="time9 != null" >
+        #{time9,jdbcType=BIT},
+      </if>
+      <if test="time10 != null" >
+        #{time10,jdbcType=BIT},
+      </if>
+      <if test="time11 != null" >
+        #{time11,jdbcType=BIT},
+      </if>
+      <if test="time12 != null" >
+        #{time12,jdbcType=BIT},
+      </if>
+      <if test="time13 != null" >
+        #{time13,jdbcType=BIT},
+      </if>
+      <if test="time14 != null" >
+        #{time14,jdbcType=BIT},
+      </if>
+      <if test="time15 != null" >
+        #{time15,jdbcType=BIT},
+      </if>
+      <if test="time16 != null" >
+        #{time16,jdbcType=BIT},
+      </if>
+      <if test="time17 != null" >
+        #{time17,jdbcType=BIT},
+      </if>
+      <if test="time18 != null" >
+        #{time18,jdbcType=BIT},
+      </if>
+      <if test="time19 != null" >
+        #{time19,jdbcType=BIT},
+      </if>
+      <if test="time20 != null" >
+        #{time20,jdbcType=BIT},
+      </if>
+      <if test="time21 != null" >
+        #{time21,jdbcType=BIT},
+      </if>
+      <if test="time22 != null" >
+        #{time22,jdbcType=BIT},
+      </if>
+      <if test="time23 != null" >
+        #{time23,jdbcType=BIT},
+      </if>
+      <if test="time24 != null" >
+        #{time24,jdbcType=BIT},
+      </if>
+      <if test="time25 != null" >
+        #{time25,jdbcType=BIT},
+      </if>
+      <if test="time26 != null" >
+        #{time26,jdbcType=BIT},
+      </if>
+      <if test="time27 != null" >
+        #{time27,jdbcType=BIT},
+      </if>
+      <if test="time28 != null" >
+        #{time28,jdbcType=BIT},
+      </if>
+      <if test="time29 != null" >
+        #{time29,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.practise.meetingroom.model.TimeExample" resultType="java.lang.Integer" >
+    select count(*) from time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update time
+    <set >
+      <if test="record.timeId != null" >
+        time_id = #{record.timeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.meetingroomId != null" >
+        meetingroom_id = #{record.meetingroomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.topicname != null" >
+        topicName = #{record.topicname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingroomName != null" >
+        meetingroom_name = #{record.meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time1 != null" >
+        time1 = #{record.time1,jdbcType=BIT},
+      </if>
+      <if test="record.time2 != null" >
+        time2 = #{record.time2,jdbcType=BIT},
+      </if>
+      <if test="record.time3 != null" >
+        time3 = #{record.time3,jdbcType=BIT},
+      </if>
+      <if test="record.time4 != null" >
+        time4 = #{record.time4,jdbcType=BIT},
+      </if>
+      <if test="record.time5 != null" >
+        time5 = #{record.time5,jdbcType=BIT},
+      </if>
+      <if test="record.time6 != null" >
+        time6 = #{record.time6,jdbcType=BIT},
+      </if>
+      <if test="record.time7 != null" >
+        time7 = #{record.time7,jdbcType=BIT},
+      </if>
+      <if test="record.time8 != null" >
+        time8 = #{record.time8,jdbcType=BIT},
+      </if>
+      <if test="record.time9 != null" >
+        time9 = #{record.time9,jdbcType=BIT},
+      </if>
+      <if test="record.time10 != null" >
+        time10 = #{record.time10,jdbcType=BIT},
+      </if>
+      <if test="record.time11 != null" >
+        time11 = #{record.time11,jdbcType=BIT},
+      </if>
+      <if test="record.time12 != null" >
+        time12 = #{record.time12,jdbcType=BIT},
+      </if>
+      <if test="record.time13 != null" >
+        time13 = #{record.time13,jdbcType=BIT},
+      </if>
+      <if test="record.time14 != null" >
+        time14 = #{record.time14,jdbcType=BIT},
+      </if>
+      <if test="record.time15 != null" >
+        time15 = #{record.time15,jdbcType=BIT},
+      </if>
+      <if test="record.time16 != null" >
+        time16 = #{record.time16,jdbcType=BIT},
+      </if>
+      <if test="record.time17 != null" >
+        time17 = #{record.time17,jdbcType=BIT},
+      </if>
+      <if test="record.time18 != null" >
+        time18 = #{record.time18,jdbcType=BIT},
+      </if>
+      <if test="record.time19 != null" >
+        time19 = #{record.time19,jdbcType=BIT},
+      </if>
+      <if test="record.time20 != null" >
+        time20 = #{record.time20,jdbcType=BIT},
+      </if>
+      <if test="record.time21 != null" >
+        time21 = #{record.time21,jdbcType=BIT},
+      </if>
+      <if test="record.time22 != null" >
+        time22 = #{record.time22,jdbcType=BIT},
+      </if>
+      <if test="record.time23 != null" >
+        time23 = #{record.time23,jdbcType=BIT},
+      </if>
+      <if test="record.time24 != null" >
+        time24 = #{record.time24,jdbcType=BIT},
+      </if>
+      <if test="record.time25 != null" >
+        time25 = #{record.time25,jdbcType=BIT},
+      </if>
+      <if test="record.time26 != null" >
+        time26 = #{record.time26,jdbcType=BIT},
+      </if>
+      <if test="record.time27 != null" >
+        time27 = #{record.time27,jdbcType=BIT},
+      </if>
+      <if test="record.time28 != null" >
+        time28 = #{record.time28,jdbcType=BIT},
+      </if>
+      <if test="record.time29 != null" >
+        time29 = #{record.time29,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update time
+    set time_id = #{record.timeId,jdbcType=INTEGER},
+      meetingroom_id = #{record.meetingroomId,jdbcType=INTEGER},
+      topicName = #{record.topicname,jdbcType=VARCHAR},
+      meetingroom_name = #{record.meetingroomName,jdbcType=VARCHAR},
+      time1 = #{record.time1,jdbcType=BIT},
+      time2 = #{record.time2,jdbcType=BIT},
+      time3 = #{record.time3,jdbcType=BIT},
+      time4 = #{record.time4,jdbcType=BIT},
+      time5 = #{record.time5,jdbcType=BIT},
+      time6 = #{record.time6,jdbcType=BIT},
+      time7 = #{record.time7,jdbcType=BIT},
+      time8 = #{record.time8,jdbcType=BIT},
+      time9 = #{record.time9,jdbcType=BIT},
+      time10 = #{record.time10,jdbcType=BIT},
+      time11 = #{record.time11,jdbcType=BIT},
+      time12 = #{record.time12,jdbcType=BIT},
+      time13 = #{record.time13,jdbcType=BIT},
+      time14 = #{record.time14,jdbcType=BIT},
+      time15 = #{record.time15,jdbcType=BIT},
+      time16 = #{record.time16,jdbcType=BIT},
+      time17 = #{record.time17,jdbcType=BIT},
+      time18 = #{record.time18,jdbcType=BIT},
+      time19 = #{record.time19,jdbcType=BIT},
+      time20 = #{record.time20,jdbcType=BIT},
+      time21 = #{record.time21,jdbcType=BIT},
+      time22 = #{record.time22,jdbcType=BIT},
+      time23 = #{record.time23,jdbcType=BIT},
+      time24 = #{record.time24,jdbcType=BIT},
+      time25 = #{record.time25,jdbcType=BIT},
+      time26 = #{record.time26,jdbcType=BIT},
+      time27 = #{record.time27,jdbcType=BIT},
+      time28 = #{record.time28,jdbcType=BIT},
+      time29 = #{record.time29,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.practise.meetingroom.model.Time" >
+    update time
+    <set >
+      <if test="meetingroomId != null" >
+        meetingroom_id = #{meetingroomId,jdbcType=INTEGER},
+      </if>
+      <if test="topicname != null" >
+        topicName = #{topicname,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingroomName != null" >
+        meetingroom_name = #{meetingroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="time1 != null" >
+        time1 = #{time1,jdbcType=BIT},
+      </if>
+      <if test="time2 != null" >
+        time2 = #{time2,jdbcType=BIT},
+      </if>
+      <if test="time3 != null" >
+        time3 = #{time3,jdbcType=BIT},
+      </if>
+      <if test="time4 != null" >
+        time4 = #{time4,jdbcType=BIT},
+      </if>
+      <if test="time5 != null" >
+        time5 = #{time5,jdbcType=BIT},
+      </if>
+      <if test="time6 != null" >
+        time6 = #{time6,jdbcType=BIT},
+      </if>
+      <if test="time7 != null" >
+        time7 = #{time7,jdbcType=BIT},
+      </if>
+      <if test="time8 != null" >
+        time8 = #{time8,jdbcType=BIT},
+      </if>
+      <if test="time9 != null" >
+        time9 = #{time9,jdbcType=BIT},
+      </if>
+      <if test="time10 != null" >
+        time10 = #{time10,jdbcType=BIT},
+      </if>
+      <if test="time11 != null" >
+        time11 = #{time11,jdbcType=BIT},
+      </if>
+      <if test="time12 != null" >
+        time12 = #{time12,jdbcType=BIT},
+      </if>
+      <if test="time13 != null" >
+        time13 = #{time13,jdbcType=BIT},
+      </if>
+      <if test="time14 != null" >
+        time14 = #{time14,jdbcType=BIT},
+      </if>
+      <if test="time15 != null" >
+        time15 = #{time15,jdbcType=BIT},
+      </if>
+      <if test="time16 != null" >
+        time16 = #{time16,jdbcType=BIT},
+      </if>
+      <if test="time17 != null" >
+        time17 = #{time17,jdbcType=BIT},
+      </if>
+      <if test="time18 != null" >
+        time18 = #{time18,jdbcType=BIT},
+      </if>
+      <if test="time19 != null" >
+        time19 = #{time19,jdbcType=BIT},
+      </if>
+      <if test="time20 != null" >
+        time20 = #{time20,jdbcType=BIT},
+      </if>
+      <if test="time21 != null" >
+        time21 = #{time21,jdbcType=BIT},
+      </if>
+      <if test="time22 != null" >
+        time22 = #{time22,jdbcType=BIT},
+      </if>
+      <if test="time23 != null" >
+        time23 = #{time23,jdbcType=BIT},
+      </if>
+      <if test="time24 != null" >
+        time24 = #{time24,jdbcType=BIT},
+      </if>
+      <if test="time25 != null" >
+        time25 = #{time25,jdbcType=BIT},
+      </if>
+      <if test="time26 != null" >
+        time26 = #{time26,jdbcType=BIT},
+      </if>
+      <if test="time27 != null" >
+        time27 = #{time27,jdbcType=BIT},
+      </if>
+      <if test="time28 != null" >
+        time28 = #{time28,jdbcType=BIT},
+      </if>
+      <if test="time29 != null" >
+        time29 = #{time29,jdbcType=BIT},
+      </if>
+    </set>
+    where time_id = #{timeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.practise.meetingroom.model.Time" >
+    update time
+    set meetingroom_id = #{meetingroomId,jdbcType=INTEGER},
+      topicName = #{topicname,jdbcType=VARCHAR},
+      meetingroom_name = #{meetingroomName,jdbcType=VARCHAR},
+      time1 = #{time1,jdbcType=BIT},
+      time2 = #{time2,jdbcType=BIT},
+      time3 = #{time3,jdbcType=BIT},
+      time4 = #{time4,jdbcType=BIT},
+      time5 = #{time5,jdbcType=BIT},
+      time6 = #{time6,jdbcType=BIT},
+      time7 = #{time7,jdbcType=BIT},
+      time8 = #{time8,jdbcType=BIT},
+      time9 = #{time9,jdbcType=BIT},
+      time10 = #{time10,jdbcType=BIT},
+      time11 = #{time11,jdbcType=BIT},
+      time12 = #{time12,jdbcType=BIT},
+      time13 = #{time13,jdbcType=BIT},
+      time14 = #{time14,jdbcType=BIT},
+      time15 = #{time15,jdbcType=BIT},
+      time16 = #{time16,jdbcType=BIT},
+      time17 = #{time17,jdbcType=BIT},
+      time18 = #{time18,jdbcType=BIT},
+      time19 = #{time19,jdbcType=BIT},
+      time20 = #{time20,jdbcType=BIT},
+      time21 = #{time21,jdbcType=BIT},
+      time22 = #{time22,jdbcType=BIT},
+      time23 = #{time23,jdbcType=BIT},
+      time24 = #{time24,jdbcType=BIT},
+      time25 = #{time25,jdbcType=BIT},
+      time26 = #{time26,jdbcType=BIT},
+      time27 = #{time27,jdbcType=BIT},
+      time28 = #{time28,jdbcType=BIT},
+      time29 = #{time29,jdbcType=BIT}
+    where time_id = #{timeId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,65 @@
+/*
+ * Created by Jemmy.tang on 2016/8/11.
+ * 响应式布局：
+ * 
+ */
+
+(function($){
+
+    $.fn.extend({
+
+        responsiveList: function(){
+
+            var isIE7 =  navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0";
+
+
+            var creatStyle = function(id){
+                var styleNode=document.createElement('style');  
+                styleNode.type="text/css"; 
+                styleNode.id = id;
+                document.getElementsByTagName("head")[0].appendChild( styleNode ); 
+            }
+
+            this.each(function(index, el) {
+                var $this = $(this);
+                var id = $this.attr("id");
+                var styleNodeId = 'responsive-'+id+index;
+                var aChildren = $this.children();
+                var len = 0;
+
+                if($this.children().length==0)return;
+
+                var childTargetName = aChildren[0].tagName;
+                var minWidth = parseInt(aChildren.eq(0).css('minWidth')) || 200;
+
+                creatStyle(styleNodeId);
+                var oCss = document.getElementById(styleNodeId);
+                setStyleSheet();
+                $this.css('opacity',1);
+
+                $(window).resize(setStyleSheet);
+
+
+                function setStyleSheet(){
+                    var w = $this.width();
+                    var newLen = Math.floor(w/minWidth);
+                    var sCss = '';
+
+                    isIE7 ? (len = newLen, sCss = '#'+id+'>'+ childTargetName +'{width: '+ parseInt(1/len*w) + 'px;}',writeStyleSheet(sCss)) : (len!=newLen && (len = newLen, sCss = '#'+id+'>'+ childTargetName +'{width: '+ 100/len + '%;}', writeStyleSheet(sCss)))
+                }
+
+
+                function writeStyleSheet(sCss){
+                    oCss.styleSheet ? (oCss.styleSheet.cssText = sCss):(oCss.innerHTML = sCss);
+                }
+
+            });
+
+            return this;
+
+            
+        }
+    });
+    
+
+})(jQuery);
