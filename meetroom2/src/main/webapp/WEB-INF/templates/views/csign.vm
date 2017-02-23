@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="webkit" name="renderer">
+    <title>企业账户</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+    <script type="text/javascript" src="/resources/js/jquery.js"></script>
+</head>
+
+<body>
+
+<!-- header start -->
+<script type="text/javascript" src="/resources/temp/header-register.js"></script>
+<!-- header end -->
+
+<!-- content start -->
+<div class="bgc3 wrap">
+    <div class="container minH700 bgc1">
+        <div class="m-tab1-hd clearfix">
+            <a href="/rest/page/psign" class="item"><i class="icon icon-personal"></i>个人账户</a>
+            <a href="javascript:;" class="item active"><i class="icon icon-company"></i>企业账户</a>
+        </div>
+        <div class="m-tab1-con company-account">
+            <div class="m-form m-form-label-tr">
+                <div class="form-group">
+                    <label class="control-label col-6">企业邮箱</label>
+                    <div class="col-offset-6">
+                        <input class="u-txt lg" type="text" placeholder="请输入公司或团队邮箱"
+                               id="cemail" name="cemail" onblur="checkcEmail()" style="width: 293px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-6">验证码</label>
+                    <div class="col-offset-6">
+                        <input class="u-txt lg fl" type="text" placeholder="请输入验证码"
+                               id="verifyCode" name="verifyCode" onblur="verifyCode" style="width: 214px;">
+                        <a href="#"><img src="/resources/img/vertify.png" class="mt10 fl ml10"></a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-offset-6">
+                        <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>同意遵守<a href="#">《服务条款》</a></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-offset-6">
+                        <a href="#" class="u-btn lg lw u-btn-primary">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- content end -->
+
+<!-- footer start -->
+<script type="text/javascript" src="/resources/temp/footer.js"></script>
+<!-- footer end -->
+
+<!--[if lt IE 9]>
+<script src="js/placeholder.js"></script>
+<![endif]-->
+
+</body>
+<script src="/resources/js/page.js"></script>
+<script>
+    ##验证邮箱格式
+    function checkcEmail() {
+        var id = "cemail";
+        var value = $("#" + id).val();//获取输入框内容
+        /*
+         * 1. 非空校验
+         */
+        if(!value) {
+            /*
+             * 获取对应的label
+             * 添加错误信息
+             * 显示label
+             */
+            $("#" + id + "Error").text("Email不能为空！");
+            showError($("#" + id + "Error"));
+            return false;
+        }
+        /*
+         * 2. Email格式校验
+         */
+        if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(value)) {
+            /*
+             * 获取对应的label
+             * 添加错误信息
+             * 显示label
+             */
+            $("#" + id + "Error").text("错误的Email格式！");
+            showError($("#" + id + "Error"));
+            false;
+        }
+        /*
+         * 3. 是否注册校验
+         */
+        $.ajax({
+            url:"/goods/UserServlet",//要请求的servlet
+            data:{method:"ajaxValidateEmail", email:value},//给服务器的参数
+            type:"POST",
+            dataType:"json",
+            async:false,//是否异步请求，如果是异步，那么不会等服务器返回，我们这个函数就向下运行了。
+            cache:false,
+            success:function(result) {
+                if(!result) {//如果校验失败
+                    $("#" + id + "Error").text("Email已被注册！");
+                    showError($("#" + id + "Error"));
+                    return false;
+                }
+            }
+        });
+        return true;
+    }
+    ##验证验证码
+    function verifyCode() {
+        var id = "verifyCode";
+        var value = $("#" + id).val();//获取输入框内容
+        /*
+         * 1. 非空校验
+         */
+        if(!value) {
+            /*
+             * 获取对应的label
+             * 添加错误信息
+             * 显示label
+             */
+            $("#" + id + "Error").text("验证码不能为空！");
+            showError($("#" + id + "Error"));
+            return false;
+        }
+        /*
+         * 2. 长度校验
+         */
+        if(value.length != 4) {
+            /*
+             * 获取对应的label
+             * 添加错误信息
+             * 显示label
+             */
+            $("#" + id + "Error").text("错误的验证码！");
+            showError($("#" + id + "Error"));
+            false;
+        }
+        /*
+         * 3. 是否正确
+         */
+        $.ajax({
+            url:"/goods/UserServlet",//要请求的servlet
+            data:{method:"ajaxValidateVerifyCode", verifyCode:value},//给服务器的参数
+            type:"POST",
+            dataType:"json",
+            async:false,//是否异步请求，如果是异步，那么不会等服务器返回，我们这个函数就向下运行了。
+            cache:false,
+            success:function(result) {
+                if(!result) {//如果校验失败
+                    $("#" + id + "Error").text("验证码错误！");
+                    showError($("#" + id + "Error"));
+                    return false;
+                }
+            }
+        });
+        return true;
+    }
+
+
+    ## 内容显示
+    function showError(ele) {
+        var text = ele.text();//获取元素的内容
+        if(!text) {//如果没有内容
+            ele.css("display", "none");//隐藏元素
+        } else {//如果有内容
+            ele.css("display", "");//显示元素
+        }
+    }
+    $(function(){
+        $('.u-checkbox').checkbox();
+    })
+</script>
+</html>

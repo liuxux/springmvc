@@ -1,0 +1,205 @@
+/*var res = {
+  code: 0, 
+  msg:"成功", 
+  data: { 
+   total: 1000,            //文件总数
+   completed: 1000       //已处理的
+ }
+}
+*/
+function ImportLoading() {
+  this.opts = {
+    url: "",
+    type: "POST",
+    dataType: "JSON",
+    param: {},
+    title: '数据处理中...',
+    content: '关闭本页面不会影响到本次操作',
+    totalLabel: '总数',
+    completedLabel: '已处理数',
+    success: function() {},
+    error: function() {},
+    isLoading: false
+  };
+  this.popEle = null;
+  this.totalEle = null;
+  this.completedEle = null;
+  this.scaleEle = null;
+  this.progressEle = null;
+  this.isCreated = false;
+  this.dialog = null;
+}
+
+ImportLoading.prototype = {
+
+  constructor: ImportLoading,
+
+  init: function(opt) {
+    var _self = this;
+
+    _self.opts = $.extend({}, _self.opts, opt || {});
+    _self.showPop();
+    _self.doAjax();
+  },
+
+  createProgress: function() {
+    var _self = this, opts = _self.opts;
+    _self.popEle = $('<div class="popupLayer">'+ 
+                      '<div class="m-loading-batch">'+
+                      '<i class="ico"></i>'+
+                      '<h3 class="info">'+ opts.title +'</h3>'+
+                      '<p class="desc">'+ opts.content +'</p>'+
+                      '<div class="u-progress-batch">'+
+                        '<div class="progress-bg">'+
+                          '<p class="progress-bar"></p>'+
+                        '</div>'+
+                        '<div class="progress-txt">'+
+                          '<span class="scale"></span>'+
+                          '<p class="total">'+ opts.totalLabel +'：<span class="total-num"></span></p>'+
+                          '<p class="completed">'+ opts.completedLabel +'：<span class="completed-num"></span></p>'+
+                        '</div>'+
+                      '</div>'+
+                      '</div>'+
+                    '</div>');
+
+    _self.totalEle = _self.popEle.find('.total-num');
+    _self.completedEle = _self.popEle.find('.completed-num');
+    _self.scaleEle = _self.popEle.find('.scale');
+    _self.progressEle = _self.popEle.find('.progress-bar');
+    _self.popEle.appendTo($('body'));
+
+    _self.isCreated = true;
+  },
+  showPop: function(){
+    var _self = this, opts = _self.opts;
+    _self.dialog = dialog; 
+    _self.createProgress();
+    _self.dialog.init({
+      oPop: _self.popEle,
+      h: 178,
+      w: 550
+    })
+  },
+
+  doAjax: function(){
+    var _self = this;
+    var opts = _self.opts;
+    if( !opts.url ) return;
+    $.ajax({
+      type: opts.type,
+      data: opts.param,
+      dataType: opts.dataType,
+      url: opts.url,
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        _self.dialog.closeFn();
+      },
+      success: function (res) {
+        if( res.code == 0 ){
+          var data = res.data;
+          _self.interpolation(data.total, data.completed);
+
+          if(data.total <= data.completed){
+            setTimeout(function(){
+              _self.dialog.closeFn();
+            }, 600)
+            
+            return;
+          }
+
+          setTimeout(function(){
+            _self.doAjax();
+          }, 1000);
+
+        } else {
+          opts.error(res)
+        }
+
+      }
+    });
+  },
+
+  close: function(){
+    _self.dialog.closeFn();
+  },
+
+  interpolation: function(iTotal, iCompleted) {
+    var _self = this;
+    iCompleted = iCompleted > iTotal ? iTotal : iCompleted;
+    var scale = Math.floor( (iCompleted/iTotal) * 100 ) + '%';
+
+    _self.totalEle.html(iTotal);
+    _self.completedEle.html(iCompleted);
+    _self.scaleEle.html(scale);
+    _self.progressEle.css('width', scale);
+  }
+
+}
+
+$.extend({
+  importProgress: function(opt){
+    var importLoading = new ImportLoading()
+        importLoading.init(opt);
+  }
+})
+
+
+$.fn.extend({
+  commonLoading: function(opt){
+
+    return this.each(function(index, el) {
+      var opts = {
+        success: function(){},
+        error: function(){},
+        isPop: true,
+        img: null
+      }
+
+      opts = $.extend({}, opts, opt);
+
+      var minTime = 1000;
+      var startTime, endTime;
+      var _self = this;
+
+      var dialog = dialog;
+      $(this).ajaxForm({
+        beforeSend: function(){
+          startTime = new Date();
+          if(opts.isPop){
+            dialog.init({
+              isLoading: true
+            })
+          } else {
+            opts.img.show();
+          }
+        },
+        success: function(res){
+          if(res.code == 0){
+            closeFn(opts.success(res))
+            
+          }else{
+            closeFn(opts.error(res));
+          }
+        },
+        error: function(){
+          closeFn();
+        }
+      })
+
+      function closeFn(cb){
+        if(opts.isPop){
+          endTime = new Date();
+          minTime = minTime < endTime-startTime ? 0 : minTime;
+          setTimeout(function(){
+            dialog.closeFn();
+            cb&&cb();
+          }, minTime)
+        } else {
+          opts.img.hide();
+          cb&&cb();
+        }
+      }
+    });
+  }
+})
+
+

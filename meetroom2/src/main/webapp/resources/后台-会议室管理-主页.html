@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="webkit" name="renderer">
+    <title>会议室管理</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+
+<body>
+<!-- siteNav start -->
+<script type="text/javascript" src="./temp/siteNav.js"></script>
+<!-- siteNav end -->
+
+<!-- header start -->
+<script type="text/javascript" src="./temp/header.js"></script>
+<!-- header end -->
+
+<!-- content start -->
+<div class="nav-main">
+  <div class="container clearfix">
+    <div class="nav-list fr">
+      <a href="#" class="nav-active">会议室管理</a>
+      <a href="#">预定记录</a>
+      <a href="#">设置</a>
+    </div>
+    <h1>会议室预定</h1>
+  </div>
+</div>
+
+<div class="container wrap">
+  <p class="c5">授权码：guanaitong20161208Adfn009</p>
+  <h2 class="h2 mt30">
+    <a href="javascript:;" class="u-btn u-btn-default fr" onclick="createMeeting()">
+      <i class="iconfont c1 mr6">&#xe620;</i>创建会议室
+    </a>
+    会议室管理<span class="f14 c4">（18个）</span>
+  </h2>
+  <table class="table" width="100%">
+    <colgroup>
+      <col width="13%">
+      <col width="13%">
+      <col width="10%">
+      <col width="9%">
+      <col width="20%">
+      <col width="10%">
+      <col width="15%">
+      <col width="10%">
+    </colgroup>
+    <thead>
+      <tr>
+        <td>创建时间</td>
+        <td>会议室名称</td>
+        <td>会议室人数</td>
+        <td>预定时间</td>
+        <td>会议设备</td>
+        <td>备注</td>
+        <td>会议可见</td>
+        <td align="right">操作</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2016-08-08<span class="ml10">12:00</span></td>
+        <td>平台中心会议室</td>
+        <td>1~6人</td>
+        <td>全天</td>
+        <td>画板，智能电话，笔记本电脑...</td>
+        <td>无投影仪</td>
+        <td class="m-radio-horizontal">
+          <label class="u-radio"><input type="radio" name="option1" class=""><i class="ico"></i>是</label>
+          <label class="u-radio checked"><input type="radio" checked="" name="option1" class=""><i class="ico"></i>否</label>
+        </td>
+        <td align="right">
+          <a href="#" class="mr16" onclick="modifyMeeting()">修改</a>
+          <a href="javascript:;" onclick="deleteMeeting()">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="clearfix mt30 mb20">
+    <div class="m-page">
+      <a href="#" class="first"><i></i> </a>
+      <a href="#" class="prev"><i></i>上一页</a>
+      <a href="#">1</a>
+      <a href="#">2</a>
+      <span class="cur">3</span>
+      <a href="#">4</a>
+      <span class="dot">...</span>
+      <a href="#">6</a>
+      <a href="#" class="next">下一页<i></i></a>
+      <a href="#" class="last"><i></i></a>
+    </div>
+  </div>  
+</div>
+<!-- content end -->
+
+<!-- footer start -->
+<script type="text/javascript" src="./temp/footer.js"></script>
+<!-- footer end -->
+
+<div class="layer-con layer-modifymeeting">
+  <div class="popupLayer">
+    <div class="pop-hd">
+      <h2 class="title">创建会议室</h2>
+    </div>
+    <div class="pop-bd mt50">
+      <div class="m-form ml20">
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>名称</label>
+          <div class="col-offset-6">
+            <input class="u-txt" type="text" placeholder="请输入会议室名称" value="平台中心会议室" style="width: 495px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>设备</label>
+          <div class="col-offset-6 m-checkbox-horizontal">
+            <label class="u-checkbox checked"><input type="checkbox" checked=""><i class="ico"></i>画板</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>笔记本电脑</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>翻页笔</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>智能电话</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>投影仪</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>人数</label>
+          <div class="col-offset-6">
+            <input class="u-txt date" type="text" value="6" style="width: 48px;">
+            <span class="ml6 mr6">~</span>
+            <input class="u-txt date" type="text" value="12" style="width: 48px;">
+            <span class="c3">（注：0~20=20）</span>
+          </div>
+        </div>
+        <div class="form-group" style="z-index: 2;">
+          <label class="control-label col-6"><i>*</i>预定时间</label>
+          <div class="col-offset-6">
+            <div class="u-select j-select1 fl" style="width: 100px;">
+              <select name="province" id="province">
+                <option>08:00</option>
+                <option>08:30</option>
+                <option>09:00</option>
+                <option>09:30</option>
+                <option>10:00</option>
+                <option>10:30</option>
+              </select>
+            </div>
+            <span class="fl ml6 mr6">~</span>
+            <div class="u-select j-select2 fl" style="width: 100px;">
+              <select name="province" id="province">
+                <option>12:00</option>
+                <option>11:00</option>
+                <option>10:00</option>
+              </select>
+            </div>
+            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>全天事件</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pop-ft mt50">
+      <div class="m-btn-group tc">
+        <a href="#" class="u-btn u-btn-primary">确定</a>
+        <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+      </div>
+    </div>
+    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+  </div>
+</div>
+<div class="layer-con layer-createmeeting">
+  <div class="popupLayer">
+    <div class="pop-hd">
+      <h2 class="title">创建会议室</h2>
+    </div>
+    <div class="pop-bd mt50">
+      <div class="m-form ml20">
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>名称</label>
+          <div class="col-offset-6">
+            <input class="u-txt" type="text" placeholder="请输入会议室名称" style="width: 495px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>设备</label>
+          <div class="col-offset-6 m-checkbox-horizontal">
+            <label class="u-checkbox checked"><input type="checkbox" checked=""><i class="ico"></i>画板</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>笔记本电脑</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>翻页笔</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>智能电话</label>
+            <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>投影仪</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-6"><i>*</i>人数</label>
+          <div class="col-offset-6">
+            <input class="u-txt date" type="text" style="width: 48px;">
+            <span class="ml6 mr6">~</span>
+            <input class="u-txt date" type="text" style="width: 48px;">
+            <span class="c3">（注：0~20=20）</span>
+          </div>
+        </div>
+        <div class="form-group" style="z-index: 2;">
+          <label class="control-label col-6"><i>*</i>预定时间</label>
+          <div class="col-offset-6">
+            <div class="u-select j-select1 fl" style="width: 100px;">
+              <select name="province" id="province">
+                <option>08:00</option>
+                <option>08:30</option>
+                <option>09:00</option>
+                <option>09:30</option>
+                <option>10:00</option>
+                <option>10:30</option>
+              </select>
+            </div>
+            <span class="fl ml6 mr6">~</span>
+            <div class="u-select j-select2 fl" style="width: 100px;">
+              <select name="province" id="province">
+                <option>22:00</option>
+                <option>23:00</option>
+                <option>20:00</option>
+              </select>
+            </div>
+            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>全天事件</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pop-ft mt50">
+      <div class="m-btn-group tc">
+        <a href="#" class="u-btn u-btn-primary">确定</a>
+        <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+      </div>
+    </div>
+    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+  </div>
+</div>
+<div class="layer-con layer-deletemeeting">
+  <div class="popupLayer">
+    <div class="pop-bd">
+      <h3 class="mb10 f20 tc">删除会议室</h3>
+      <p class="f14 c3 tc">确定删除会议室么？</p>
+    </div>
+    <div class="pop-ft tc m-btn-group">
+      <a href="#" class="u-btn u-btn-primary">确定</a>
+      <a href="#" class="u-btn u-btn-default" onclick="dialog.closePop()">取消</a>
+    </div>
+    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+  </div>  
+</div>
+
+</body>
+<script src="js/page.js"></script>
+<script>
+$(function(){
+  
+  $('.u-select').select();
+  $('.u-checkbox').checkbox();
+  $('.m-radio-horizontal').each(function(){
+    $(this).find('.u-radio').radio();
+  })
+})
+  //弹出层-删除会议室
+  function deleteMeeting(){
+    dialog.init({
+      'w':580,
+      'h':200,
+      'layer':'.layer-deletemeeting'
+    })
+  }
+  //弹出层-创建会议室
+  function createMeeting(){
+    dialog.init({
+      'w':735,
+      'h':500,
+      'layer':'.layer-createmeeting'
+    })
+  }
+  //弹出层-修改会议室
+  function modifyMeeting(){
+    dialog.init({
+      'w':735,
+      'h':500,
+      'layer':'.layer-modifymeeting'
+    })
+  }
+</script>
+</html>

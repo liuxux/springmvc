@@ -1,0 +1,76 @@
+(function($){
+    $.fn.extend({
+        select: function(callback){
+            this.each(function(){
+
+                var oOriginSelect = $(this).find('select');//原生的select
+                var aOriginOptions = oOriginSelect.find('option');//原生所有option
+                var oOriginSelected = oOriginSelect.find('option:selected');//原生选中的option
+                var oSelect=null, oSelectOptions = null;
+                var $this = $(this);
+
+
+                var init = function(){
+                    renderSelectText();
+                    renderOptions();
+
+
+                    oSelect.click(function(){
+                        if(oOriginSelect.is(':disabled')){
+                            return;
+                        }
+                        $('.'+$this.attr('class')).removeClass('on');
+                        $this.addClass('on');
+                        return false;
+                    });
+
+                    $(document).click(function(){
+                        $this.removeClass('on');
+                    });
+
+                    oSelectOptions.find('li').click(function(){
+                        var value = $(this).attr('data-value');
+                        var txt = $(this).text();
+                        oSelect.find('.selected-txt').text(txt);
+                        oOriginSelect.val(value);
+                        callback && callback.call(oOriginSelect);
+                    })
+                }
+
+                var renderSelectText = function(){//渲染选中内容区域
+                    if(oOriginSelect.is(':disabled')){
+                        $this.addClass('disabled');
+                    }
+                    var selectTxtHtml = '<div class="select-text">'+
+                                            '<div class="selected-txt">'+ oOriginSelected.text() +'</div>'+
+                                            '<i class="ico"></i>'+
+                                        '</div>';
+
+
+                    oSelect = $(selectTxtHtml);
+
+                    oSelect.insertBefore(oOriginSelect);
+                }
+
+                var renderOptions = function(){//渲染options
+                    var optionHtml = '<ul class="select-options">';
+                    aOriginOptions.each(function() {
+                        optionHtml += '<li class="item" data-value="'+ $(this).val() +'">'+ $(this).text() +'</li>'
+                    });
+                    optionHtml += '</ul>'
+
+                    oSelectOptions = $(optionHtml);
+
+                    oSelectOptions.insertBefore(oOriginSelect);
+                }
+
+
+                init();
+
+            })  
+
+            return this;
+        }
+    });
+    
+})(jQuery)

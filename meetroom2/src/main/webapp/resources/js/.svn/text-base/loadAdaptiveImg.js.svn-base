@@ -1,0 +1,52 @@
+(function(win){
+
+function loadAdaptiveImg(){//加载商品列表图片
+	$('[wx-role=loadAdaptiveImg]').each(function(){
+		var $self = $(this);
+		var imgSrc = $self.attr('wx-data-src');
+		var boxH = $self.height(),boxW = $self.width();
+
+		var oImg = new Image();
+		oImg.onload = function(){
+			var finalSize=getPracticalSize(boxW, boxH, this.width, this.height);
+			$(this).css({
+				width: finalSize.w,
+				height: finalSize.h,
+				position: 'absolute',
+				top: (boxH-finalSize.h)/2,
+				left: (boxW-finalSize.w)/2
+			})
+			$self.html($(this));
+			$self.attr('wx-role','loadAdaptiveImg');
+		}
+		oImg.onerror = function(){
+			
+		}
+		oImg.src = imgSrc;
+	})
+}
+
+function getPracticalSize(maxW,maxH,w,h){//根据容器计算图片尺寸，等比
+	if(w<=maxW && h<=maxH){
+		return {
+			w:w,
+			h:h
+		}
+	}
+	var result={};
+	if( (w/maxW) > (h/maxH)){//判断高度和宽度的比率大小
+		result.w = maxW;
+		result.h = h/w*maxW;
+	}else{
+		result.h = maxH;
+		result.w = w/h*maxH;
+	}
+
+	return result;
+}
+
+win.loadAdaptiveImg = loadAdaptiveImg;
+
+})(window)
+
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--<context:annotation-config/>-->
+    <!--<context:component-scan base-package="com.practise.meetingroom"/>-->
+    <!--指明 controller 所在包，并扫描其中的注解-->
+    <!--<context:component-scan base-package="com.practise.meetingroom.controller"></context:component-scan>-->
+    <context:component-scan base-package="com.practise.meetingroom">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--<mvc:annotation-driven validator="validator"/>-->
+
+    <!-- 静态资源(js、image等)的访问 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 开启注解 -->
+    <mvc:annotation-driven/>
+
+    <bean id="loginController" class="com.practise.meetingroom.controller.LoginController"/>
+    <bean id="pageController" class="com.practise.meetingroom.controller.PageController"/>
+    <bean id="registerController" class="com.practise.meetingroom.controller.RegisterController"/>
+    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/rest/log" value-ref="loginController"/>
+                <entry key="/rest/register" value-ref="registerController"/>
+                <entry key="/rest/page" value-ref="pageController"/>
+            </map>
+
+        </property>
+    </bean>
+
+
+    <!--ViewResolver 视图解析器-->
+    <!--用于支持Servlet、JSP视图解析-->
+
+    <bean id="velocityConfigurer"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/templates/views/"/><!-- 模板存放的路径 -->
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">utf-8</prop>
+                <prop key="output.encoding">utf-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置视图的显示 -->
+    <bean id="ViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+       <property name="suffix" value=".vm"/><!-- 视图文件的后缀名 -->
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+
+
+    </bean>
+
+
+
+</beans>
